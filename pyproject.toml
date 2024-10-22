@@ -1,0 +1,36 @@
+[project]
+name = "uv-package-index"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "loguru>=0.7.2",
+    "python-dotenv>=1.0.1",
+    "torch==2.5.0 ; sys_platform == 'darwin'",
+    "torch==2.5.0+cpu ;  sys_platform != 'darwin'",
+    "torchvision==0.20.0 ; sys_platform == 'darwin'",
+    "torchvision==0.20.0+cpu ; sys_platform != 'darwin'",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "mypy>=1.12.1",
+    "pytest>=8.3.3",
+    "pytest-cov>=5.0.0",
+    "ruff>=0.7.0",
+]
+
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cpu", marker = "sys_platform != 'darwin'" },
+    { index = "pytorch", marker = "sys_platform == 'darwin'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+
+[[tool.uv.index]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl"
